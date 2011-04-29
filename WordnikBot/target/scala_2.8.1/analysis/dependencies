@@ -1,3 +1,6 @@
 #Source Dependencies
-#Fri Apr 15 15:52:15 PDT 2011
-src/main/scala/IrcBot.scala=
+#Thu Apr 28 15:21:40 PDT 2011
+src/main/scala/BeerPlugin.scala=src/main/scala/IrcBot.scala
+src/main/scala/Monkey.scala=src/main/scala/IrcBot.scala
+src/main/scala/GenericPlugin.scala=src/main/scala/IrcBot.scala\:src/main/scala/BeerPlugin.scala\:src/main/scala/Monkey.scala
+src/main/scala/IrcBot.scala=src/main/scala/BeerPlugin.scala

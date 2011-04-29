@@ -1,6 +1,5 @@
 #External Dependencies
-#Fri Apr 15 09:49:56 PDT 2011
-/Users/rwalsh/Documents/scala/code-examples/tmp/lib_managed/scala_2.8.1/compile/argot_2.8.1-0.2.jar=src/main/scala/test.scala
-/Users/rwalsh/Documents/scala/code-examples/tmp/lib_managed/scala_2.8.1/compile/lift-json_2.8.1-2.2.jar=src/main/scala/test.scala
-/Users/rwalsh/Documents/scala/code-examples/tmp/project/boot/scala-2.8.1/lib/scala-library.jar=src/main/scala/test.scala
+#Thu Apr 21 15:45:37 PDT 2011
+/Users/rwalsh/Documents/git/hobbeswalsh/randomstuff/WordSmack/project/boot/scala-2.8.1/lib/scala-library.jar=src/main/scala/test.scala
 /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar=src/main/scala/test.scala
+/Users/rwalsh/Documents/git/hobbeswalsh/randomstuff/WordSmack/lib_managed/scala_2.8.1/compile/lift-json_2.8.1-2.2.jar=src/main/scala/test.scala

@@ -1,3 +1,6 @@
 #Source Hashes
-#Fri Apr 15 15:52:15 PDT 2011
-src/main/scala/IrcBot.scala=57a239a6642f5fc5f68577f44157b9c30705ecac
+#Thu Apr 28 15:21:40 PDT 2011
+src/main/scala/BeerPlugin.scala=7547622fdff18735da88c6e2fdf6867450b875b0
+src/main/scala/Monkey.scala=85f0ff2ec2186cf1d3f276aa32e48e822fbf3d7c
+src/main/scala/GenericPlugin.scala=b5bb31e44d30f6b1991ed3bb7a9f2cbc3354b2a2
+src/main/scala/IrcBot.scala=9f5f35ffebb783b1de9457b49875aa5243135b32

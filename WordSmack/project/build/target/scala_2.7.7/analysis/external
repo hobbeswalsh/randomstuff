@@ -1,4 +1,4 @@
 #External Dependencies
-#Fri Apr 15 09:49:55 PDT 2011
-/Users/rwalsh/Documents/scala/code-examples/tmp/project/boot/scala-2.7.7/org.scala-tools.sbt/sbt/0.7.4/sbt_2.7.7-0.7.4.jar=Dependencies.scala
-/Users/rwalsh/Documents/scala/code-examples/tmp/project/boot/scala-2.7.7/lib/scala-library.jar=Dependencies.scala
+#Thu Apr 21 15:45:36 PDT 2011
+/Users/rwalsh/Documents/git/hobbeswalsh/randomstuff/WordSmack/project/boot/scala-2.7.7/org.scala-tools.sbt/sbt/0.7.4/sbt_2.7.7-0.7.4.jar=Dependencies.scala
+/Users/rwalsh/Documents/git/hobbeswalsh/randomstuff/WordSmack/project/boot/scala-2.7.7/lib/scala-library.jar=Dependencies.scala

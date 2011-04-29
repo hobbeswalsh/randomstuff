@@ -1,2 +1,3 @@
 #Classes with main methods
-#Fri Apr 15 15:52:15 PDT 2011
+#Thu Apr 28 15:21:40 PDT 2011
+src/main/scala/IrcBot.scala=com.wordnik.irc.Main

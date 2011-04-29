@@ -34,7 +34,6 @@ object Validator {
   def validate(input: WordnikWord): Boolean = {
     // Lift bug. ew!
     val jsonString = "{ \"defs\": " + Source.fromURL(url + input.word + "/definitions?api_key=" + Game.apiKey).mkString + "}"
-    println(jsonString)
     val definitions = parse(jsonString).extract[WordnikDefinitions]
     if (definitions.defs.isEmpty) { return false }
     else { return true }
@@ -42,19 +41,24 @@ object Validator {
 }
 
 object WordGuesser {
-  val url = "http://api.wordnik.com/v4/words.json/search?allowRegex=true"
+  val url = "http://api.wordnik.com/v4/words.json/search?allowRegex=true&minDictionaryCount=5"
 
   implicit val formats = DefaultFormats  // For casting JSON to case classes
 
   def guess(chars: String): Char = {
     val jsonString = Source.fromURL(url + "&api_key=" + Game.apiKey + "&query=" + chars + ".*").mkString
     val wordFreqs = parse( "{ \"list\":" + jsonString + "}" ).extract[WordnikFrequencyList]
+    // filter out words that are current (length + 1)
     val nonZero = for { wf <- wordFreqs.list if wf.count != 0 } yield wf
     if ( nonZero.isEmpty ) {
       println("No definitions for that, cheater!")
       System.exit(1)
     }
-    val choice = util.Random.shuffle(nonZero).take(1)(0)
+    val possibleChoices = nonZero.filter(
+      wf => wf.wordstring.length > (chars.length + 1)
+    )
+    if ( possibleChoices.isEmpty ) { println("I lose! I suck!"); System.exit(0) }
+    val choice = util.Random.shuffle(possibleChoices).take(1)(0)
     println( "The computer is choosing '" + chars + choice.wordstring.charAt(chars.length) + "'" )
     return choice.wordstring.charAt(chars.length)
   }
@@ -81,25 +85,25 @@ object Game {
   def play(guess: String): Any = {
     this.word += guess
     
-    // if ( this.word.length > 3 && Validator.validate(WordnikWord(this.word)) ) {
-    //   println( this.word + " is a word! You lose, loser!" )
-    //   val jsonString = Source.fromURL(url + "/" + this.word + "/definitions?api_key=" + apiKey).mkString
-    //   val definitions = parse("{ \"defs\":" + jsonString + "}").extract[WordnikDefinitions]
+    if ( this.word.length > 3 && Validator.validate(WordnikWord(this.word)) ) {
+      println( this.word + " is a word! You lose, loser!" )
+      val jsonString = Source.fromURL(url + "/" + this.word + "/definitions?api_key=" + apiKey).mkString
+      val definitions = parse("{ \"defs\":" + jsonString + "}").extract[WordnikDefinitions]
 
-    //   println(definitions.defs(0).word + ": " + definitions.defs(0).text)
+      println(definitions.defs(0).word + ": " + definitions.defs(0).text)
 
-    //   System.exit(0)
-    // }
+      System.exit(0)
+    }
 
     this.word += WordGuesser.guess(this.word)
-    // if ( this.word.length > 3 && Validator.validate(WordnikWord(this.word)) ) {
-    //   println("The stupid computer lost!")
-    //   val jsonString = Source.fromURL(url + "/" + this.word + "/definitions?api_key=" + apiKey).mkString
-    //   val definitions = parse("{ \"defs\":" + jsonString + "}").extract[WordnikDefinitions]
+    if ( this.word.length > 3 && Validator.validate(WordnikWord(this.word)) ) {
+      println("The stupid computer lost!")
+      val jsonString = Source.fromURL(url + "/" + this.word + "/definitions?api_key=" + apiKey).mkString
+      val definitions = parse("{ \"defs\":" + jsonString + "}").extract[WordnikDefinitions]
 
-    //   println(definitions.defs(0).word + ": " + definitions.defs(0).text)
-    //   System.exit(0)	
-    // }
+      println(definitions.defs(0).word + ": " + definitions.defs(0).text)
+      System.exit(0)	
+    }
     println( this.word + " still isn't a word. Keep trying..." )
     val humanGuess = InputGrabber.getInput
     if ( humanGuess == "surrender" ) { WordGuesser.reveal(this.word) }
