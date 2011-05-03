@@ -1,6 +1,8 @@
 #Source Hashes
-#Thu Apr 28 15:21:40 PDT 2011
-src/main/scala/BeerPlugin.scala=7547622fdff18735da88c6e2fdf6867450b875b0
-src/main/scala/Monkey.scala=85f0ff2ec2186cf1d3f276aa32e48e822fbf3d7c
-src/main/scala/GenericPlugin.scala=b5bb31e44d30f6b1991ed3bb7a9f2cbc3354b2a2
-src/main/scala/IrcBot.scala=9f5f35ffebb783b1de9457b49875aa5243135b32
+#Tue May 03 14:17:26 PDT 2011
+src/main/scala/BeerPlugin.scala=63d524fb8010af76e90941d4fa368f89c85ced9b
+src/main/scala/Monkey.scala=2ccc9aa3b2b716776394fca29de6403f0737f8c3
+src/main/scala/GenericPlugin.scala=9a621e768260b8991b221bdc5c8594443e9fea68
+src/main/scala/BetterPlugin.scala=ce3b49d1050def2202222bd4e84cc335db1e8c84
+src/main/scala/IrcBot.scala=decb393d46606e576afbc0e313bf93b28bc0483e
+src/main/scala/AddressPlugin.scala=4b64803e9cfeb9850c5ab06c1e13007cc5a2fd42

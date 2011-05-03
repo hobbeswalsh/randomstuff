@@ -6,24 +6,37 @@ import org.jibble.pircbot._
 import scala.actors.Actor
 import scala.actors._
 
-class Command(commandline:String, channel:String)
+case class Command(
+  name: String,
+  args: List[String]
+)
 
-class Replier(irc:PircBot) extends Actor {
-  var command = ""
+class Hermes(irc:PircBot, command:Command, channel:String) extends Actor {
+
+  def getCommand: Command =  { return this.command }
+  def send(s:String) {
+    if ( s.startsWith("/me ") ) {
+      this.irc.sendAction(channel, s.substring(4))
+    } else {
+      this.irc.sendMessage(channel, s)
+    }
+  }
   def act {
     loop {
       react {
-	case _ => println("no dice")
+	case l: List[String] => 
+	  l.foreach(send(_))
+	case other => println("no dice")
       }
     }
   }
 }
 
+
 class ScalaBot(name:String) extends PircBot {
   this.setName(name)     // set our IRC name
-  var r = new Replier(this)
-  r.start
-  
+
+
   val commandChar = "?"
   // the below matches "?<command>" or "<name>: command" 
   val m = format("""(?:^\%s|^%s:[ ]?)""", commandChar, name, name).r
@@ -43,40 +56,38 @@ class ScalaBot(name:String) extends PircBot {
       this.joinChannel(channel)
     }
   }
-  
-  def waitAndSend(c: String, f: Future[Any]) {
-    while ( ! f.isSet ) {
-      Thread.sleep(100)
-    }
-    this.sendMessage(c, f().toString)
-  }
+
   override def onMessage(channel:String, sender:String, login:String, hostname:String, message:String) {
     // called whenever we see a public message in a channel
     if ( this.isCommand(message) ) {
-      println( "COMMAND RECIEVED: " + message )
       val command = parseCommand(message)
-      val p = PluginFinder.find(command(0)).get
-      //p.go(command).foreach( this.sendMessage(channel, _))
-      //p.go(command).foreach( println(_) )
-      p.start
-      r.command = message
-      r ! "jesus fucking christ"
-      p ! r
+      val plugin = PluginFinder.find(command(0)).get
+
+      if ( plugin == None ) { return None }
       
-//      c.send(command, OutputChannel)
+      val c = new Command(command(0), command.tail)
+
+      // Make a new Hermes to deliver this message
+      val h = new Hermes(this, c, channel)
+      h.start
+      
+      plugin.start          // Every pluign is an actor       
+      plugin ! h            // tell the plugin actor to process the Replier message
+      
     } else {
       println("Got a non-command message: " + message)
     }
   }
-   
-
-  
 
 }
 
 object PluginFinder {
-  var m = Map[String, GenericPlugin]( "beer" -> new BeerPlugin )
-  m += "monkey" -> new MonkeyPlugin
+  var m = Map[String, GenericPlugin]( 
+       "beer"    -> new BeerPlugin,
+       "monkey"  -> new MonkeyPlugin,
+       "address" -> new AddressPlugin,
+       "better"  -> new BetterPlugin
+  )
   
 
   def find(name:String): Option[plugins.GenericPlugin] = {
@@ -94,6 +105,7 @@ object Main {
 
     //b.onMessage("#foo", "bar", "bar", "bar", "?beer")
     b.connect("irc.freenode.net")
+
     //System.exit(0)
   }
 }

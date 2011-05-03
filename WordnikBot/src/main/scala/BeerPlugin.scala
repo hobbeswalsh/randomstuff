@@ -1,8 +1,5 @@
 package com.wordnik.irc.plugins
 
-import scala.actors.Actor
-import scala.actors.Actor._
-
 import com.wordnik.irc._
 import scala.io.Source
 import scala.util.Random
@@ -46,6 +43,7 @@ case class Brewery(
   last_mod: String
 )
 
+
 // The actual plugin
 class BeerPlugin extends GenericPlugin {
   implicit val formats = DefaultFormats  // For casting JSON to case classes
@@ -54,35 +52,37 @@ class BeerPlugin extends GenericPlugin {
   val countUrl   = "http://obdb-dev-hoke.apigee.com/beers/count"
   val r = new Random
 
-  override def go(command:List[String]): List[String] = {
-    Thread.sleep(5)
+  val sayings = List(
+    "/me could go for a ",
+    "I feel like a ",
+    "I'm going to Draegers; should I pick up some ",
+    "/me thirsts for "
+  )
+
+  def getBeer: List[String] = {
     val bc = parse(Source.fromURL(countUrl).mkString).extract[BeerCount]
     val randomNum = r.nextInt(bc.count)
     val j = Source.fromURL(beerUrl + randomNum).mkString
     val beerz = parse("{ \"beers\": " + j + "}").extract[BeerList]
     val beer = beerz.beers(0)
     val brewery = parse(Source.fromURL(breweryUrl + beer.brewery_id).mkString).extract[Brewery]
-    List( beer.name + " from " + brewery.name )
+    val saying = r.shuffle(sayings).head
+    List( saying + beer.name + " from " + brewery.name )
   }
   
   def act {
-    loop { receive {
-      case r: Replier =>
-	println(r)
-	println(sender)
-	sender ! List("holy moly got a command")
-	println("fucking fuck")
-      // case List("beer", "drink", _*) =>
-      // 	println("drankin some beer")
-      // 	reply(List("hello beer"))
-      // case List("beer", _*) =>
-      // 	println("getting some beer")
-      case _                =>
-	println("other")
-	sender ! "yummmmm"
-	println( sender.getClass() )
-      
-    } }
+    loop {
+      receive {
+      case h: com.wordnik.irc.Hermes =>
+	h.getCommand.name match {
+	  case "beer" => h ! getBeer
+	  case _      => None
+	}
+      case _  =>
+	println("got somthing I didn't recognize")
+	sender ! None
+      }
+    }
   
 
   }
