@@ -7,5 +7,7 @@ class HelloWorldProject(info: ProjectInfo) extends DefaultProject(info) {
   val specs = "org.specs" % "specs" % "1.4.3"
   val argot = "org.clapper" %% "argot" % "0.2"
   val grizzled = "org.clapper" %% "grizzled-scala" % "1.0.3"
+  val mail = "javax.mail" % "mail" % "1.4"
+
 
 }

@@ -1,8 +1,13 @@
 #Source Hashes
-#Tue May 03 14:17:26 PDT 2011
-src/main/scala/BeerPlugin.scala=63d524fb8010af76e90941d4fa368f89c85ced9b
+#Wed May 04 17:18:15 PDT 2011
+src/main/scala/IrcBot.scala=e63ab2e62a93fe390c490087660bc67c0c661479
+src/main/scala/GenericPlugin.scala=adbe091dc026f2dfbd5fce34d7ae31e04fe05613
+src/main/scala/TinyPlugin.scala=d68b6467a1f26e872d01a5ff33d5c840d258e0ff
 src/main/scala/Monkey.scala=2ccc9aa3b2b716776394fca29de6403f0737f8c3
-src/main/scala/GenericPlugin.scala=9a621e768260b8991b221bdc5c8594443e9fea68
-src/main/scala/BetterPlugin.scala=ce3b49d1050def2202222bd4e84cc335db1e8c84
-src/main/scala/IrcBot.scala=decb393d46606e576afbc0e313bf93b28bc0483e
 src/main/scala/AddressPlugin.scala=4b64803e9cfeb9850c5ab06c1e13007cc5a2fd42
+src/main/scala/FortunePlugin.scala=cdaa526f6a3c3b9acc73722efda6bfac119d50d8
+src/main/scala/PropsPlugin.scala=c95ea32874d7a7adaac15b5f88c9615d4c86ffdc
+src/main/scala/BeerPlugin.scala=14c8a26bf9a3c88ebcb1185a3c59ec88365d7f8b
+src/main/scala/FeaturePlugin.scala=1eebacbf658c93e93e693b819a630fd76f7fec1f
+src/main/scala/BetterPlugin.scala=ce3b49d1050def2202222bd4e84cc335db1e8c84
+src/main/scala/DissPlugin.scala=8a4a914a0815838ae5fefd776dfe15faff2cc6b0

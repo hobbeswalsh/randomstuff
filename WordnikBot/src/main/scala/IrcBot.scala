@@ -1,9 +1,7 @@
 package com.wordnik.irc
 
 import com.wordnik.irc.plugins._
-import java.util.HashMap
 import org.jibble.pircbot._
-import scala.actors.Actor
 import scala.actors._
 
 case class Command(
@@ -37,17 +35,23 @@ class ScalaBot(name:String) extends PircBot {
   this.setName(name)     // set our IRC name
 
 
-  val commandChar = "?"
+  val commandChar = '?'
   // the below matches "?<command>" or "<name>: command" 
   val m = format("""(?:^\%s|^%s:[ ]?)""", commandChar, name, name).r
 
   def isCommand(message:String): Boolean = {
-    return message.startsWith(this.getName + ":") || message.startsWith(this.commandChar)
+    return message.startsWith(this.getName + ":") || message.charAt(0) == this.commandChar
   }
   
   def parseCommand(command:String): List[String] = {
     val a = command.split(" ").toList
-    return a(0).substring(1) :: a.tail
+    if ( a(0) == name + ":" ) {
+      println(a)
+      println(a.tail)
+      return a.tail
+    } else {
+      return a(0).substring(1) :: a.tail
+    }
   }
   
   override def onInvite(targetNick:String, sourceNick:String, sourceLogin:String, sourceHostname: String, channel:String) {
@@ -60,19 +64,18 @@ class ScalaBot(name:String) extends PircBot {
   override def onMessage(channel:String, sender:String, login:String, hostname:String, message:String) {
     // called whenever we see a public message in a channel
     if ( this.isCommand(message) ) {
-      val command = parseCommand(message)
-      val plugin = PluginFinder.find(command(0)).get
+      val parsedMessage = parseCommand(message)
+      val command = new Command(parsedMessage(0), parsedMessage.tail)
 
-      if ( plugin == None ) { return None }
-      
-      val c = new Command(command(0), command.tail)
+      if ( PluginFinder.find(command.name) == None ) { return None }
+      val plugin =  PluginFinder.find(command.name).get
 
       // Make a new Hermes to deliver this message
-      val h = new Hermes(this, c, channel)
+      val h = new Hermes(this, command, channel)
       h.start
       
       plugin.start          // Every pluign is an actor       
-      plugin ! h            // tell the plugin actor to process the Replier message
+      plugin ! h            // tell the plugin actor to process Hermes' message
       
     } else {
       println("Got a non-command message: " + message)
@@ -82,21 +85,24 @@ class ScalaBot(name:String) extends PircBot {
 }
 
 object PluginFinder {
-  var m = Map[String, GenericPlugin]( 
-       "beer"    -> new BeerPlugin,
-       "monkey"  -> new MonkeyPlugin,
-       "address" -> new AddressPlugin,
-       "better"  -> new BetterPlugin
+  var m = Map[String, GenericPlugin](
+    "beer"    -> new BeerPlugin,
+    "monkey"  -> new MonkeyPlugin,
+    "address" -> new AddressPlugin,
+    "diss"    -> new DissPlugin,
+    "props"   -> new PropsPlugin,
+    "fortune" -> new FortunePlugin,
+    "tiny"    -> new TinyPlugin,
+    "better"  -> new BetterPlugin
   )
   
 
-  def find(name:String): Option[plugins.GenericPlugin] = {
-    val foo = m.get(name)
-    if ( foo.isEmpty ) { return None }
-    else { return foo }
+  def find(name:String): Option[GenericPlugin] = {
+    m.get(name)
   }
 
 }
+
 object Main {
   def main(args:Array[String]) {
     val b = new ScalaBot("hobbeswalsh11")

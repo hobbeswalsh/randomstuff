@@ -56,7 +56,8 @@ class BeerPlugin extends GenericPlugin {
     "/me could go for a ",
     "I feel like a ",
     "I'm going to Draegers; should I pick up some ",
-    "/me thirsts for "
+    "/me thirsts for ",
+    "Is it Friday yet? I want a bottle of "
   )
 
   def getBeer: List[String] = {
