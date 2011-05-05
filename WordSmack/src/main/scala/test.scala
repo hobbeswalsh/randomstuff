@@ -73,7 +73,7 @@ object WordGuesser {
 
 object Game {
   val alphabet = 'a' to 'z'
-  val apiKey = "d92d8109432f0ead8000707303d0c6849e23be119a18df853"
+  val apiKey = "deadbeef"
   val url = "http://api.wordnik.com/v4/word.json"
 
   var word = ""
