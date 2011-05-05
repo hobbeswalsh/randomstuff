@@ -9,5 +9,7 @@ class WordnikBotDependencies (info: ProjectInfo) extends DefaultProject(info) {
   val grizzled = "org.clapper" %% "grizzled-scala" % "1.0.3"
   val mail = "javax.mail" % "mail" % "1.4"
   val casbah = "com.mongodb.casbah" %% "casbah" % "2.1.2"
+  val pircbot = "pircbot" % "pircbot" % "1.4.2"
+
 
 }
