@@ -4,6 +4,7 @@ import scala.actors.Actor
 
 trait GenericPlugin extends Actor
 
+trait LoggingPlugin extends Actor
 
 /*
  * None of this suff works yet, but I want to have it here in case I decide to

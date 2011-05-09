@@ -1,5 +1,6 @@
 package com.wordnik.irc
 
+import org.clapper.argot._
 import com.wordnik.irc.plugins._
 import org.jibble.pircbot._
 import scala.actors._
@@ -9,7 +10,7 @@ case class Command(
   args: List[String]
 )
 
-class Hermes(irc:PircBot, command:Command, channel:String) extends Actor {
+class Hermes(irc:ScalaBot, command:Command, channel:String) extends Actor {
 
   def getCommand: Command =  { return this.command }
   def send(s:String) {
@@ -30,10 +31,13 @@ class Hermes(irc:PircBot, command:Command, channel:String) extends Actor {
   }
 }
 
+case class Message(channel:String, author:String, text:String)
+
 
 class ScalaBot(name:String) extends PircBot {
   this.setName(name)     // set our IRC name
-
+  val logger = new MongoLoggerPlugin
+  logger.start
 
   val commandChar = '?'
   // the below matches "?<command>" or "<name>: command" 
@@ -78,7 +82,9 @@ class ScalaBot(name:String) extends PircBot {
       plugin ! h            // tell the plugin actor to process Hermes' message
       
     } else {
-      println("Got a non-command message: " + message)
+      // do whatever we need to do on a non-command message.
+      // I imagine this will get more intricate over time.
+      logger ! Message(channel, sender, message)
     }
   }
 
@@ -93,6 +99,7 @@ object PluginFinder {
     "props"   -> new PropsPlugin,
     "fortune" -> new FortunePlugin,
     "tiny"    -> new TinyPlugin,
+    "said"    -> new LogSearcherPlugin,
     "better"  -> new BetterPlugin
   )
   
@@ -103,15 +110,25 @@ object PluginFinder {
 
 }
 
-object Main {
+
+
+object ScalaBot {
+  import ArgotConverters._
+  val parser = new ArgotParser("ScalaBot")
+  val nickname = parser.option[String](
+    List("n", "nickname"),
+    "username",
+    "Bot's Nickname")
+
+  val server = parser.option[String](
+    List("s", "server"),
+    "server",
+    "The IRC Server to connect to")
+
   def main(args:Array[String]) {
-    val b = new ScalaBot("hobbeswalsh11")
-
-    b.setVerbose(true)
-
-    //b.onMessage("#foo", "bar", "bar", "bar", "?beer")
-    b.connect("irc.freenode.net")
-
-    //System.exit(0)
+    parser.parse(args)
+    val b = new ScalaBot(nickname.value.getOrElse("ScalaBot"))
+    // b.setVerbose(true)
+    b.connect(server.value.getOrElse("irc.freenode.net"))
   }
 }
