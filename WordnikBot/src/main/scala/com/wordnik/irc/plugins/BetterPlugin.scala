@@ -22,6 +22,7 @@ class BetterPlugin extends GenericPlugin {
     val terms = splitWord.split(args.mkString(" "))
     for ( item <- terms ) {
       val url = baseurl + "term=" + item
+      println(Source.fromURL(url).mkString)
       val currentValue = parse(Source.fromURL(url).mkString).extract[SucksRocksItem]
       val score = currentValue.rocks / (currentValue.sucks + currentValue.rocks)
       scores :::= List(format("%-25s: %.2f", item, score))

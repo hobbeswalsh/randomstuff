@@ -58,6 +58,18 @@ class ScalaBot(name:String) extends PircBot {
     }
   }
   
+  override def onDisconnect {
+    while ( !this.isConnected() ) {
+      try {
+	reconnect
+      } catch {
+	// oops! couldn't connect; sleep and try again.
+	case e: Exception => Thread.sleep(10000)
+	case _            => System.exit(1)
+      }
+    }
+  }
+
   override def onInvite(targetNick:String, sourceNick:String, sourceLogin:String, sourceHostname: String, channel:String) {
     // called when we are invited to a channel
     if ( targetNick == this.getName ) {
