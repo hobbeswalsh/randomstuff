@@ -11,7 +11,7 @@ class LogSearcherPlugin extends MongoPlugin with GenericPlugin {
   def findMessages(args:List[String]): List[String] = {
     val author = args.head
     val pattern = args.tail.mkString(" ").r
-    val query = MongoDBObject("nickname" -> author, "message" -> pattern)
+    val query = MongoDBObject("nick" -> author, "message" -> pattern)
     conn.find(query).map(author + ": " + _.get("message").toString).toList
   }
 
@@ -35,7 +35,7 @@ class MongoLoggerPlugin extends MongoPlugin with LoggingPlugin {
     val now = compat.Platform.currentTime
     val insert = MongoDBObject(
       "message"  -> message,
-      "nickname" -> author,
+      "nick"     -> author,
       "channel"  -> channel,
       "time"     -> now
     )
