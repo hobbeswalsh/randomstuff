@@ -12,6 +12,7 @@ class WordnikBotDependencies (info: ProjectInfo) extends DefaultProject(info) {
   val casbah = "com.mongodb.casbah" %% "casbah" % "2.1.2"
   val pircbot = "pircbot" % "pircbot" % "1.4.2"
   val snakeyaml = "org.yaml" % "snakeyaml" % "1.7"
+  val scalatest = "org.scalatest" % "scalatest" % "1.3"
 
 
 }

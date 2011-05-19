@@ -15,7 +15,8 @@ class MonkeyPlugin extends GenericPlugin {
       receive {
 	case h: com.wordnik.irc.Hermes =>
 	  h ! List(r.shuffle(replies).head)
-	case _ => sender ! None
+	case _ =>
+	  None
       }
     }
   }

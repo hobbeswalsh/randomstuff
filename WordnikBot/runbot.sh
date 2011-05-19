@@ -9,4 +9,4 @@ fi
 
 CWD=$( pwd )
 
-${SCALA} -cp ${CWD}/lib_managed/scala_2.8.1/compile/*:${CWD}/target/scala_2.8.1/* com.wordnik.irc.ScalaBot $@
+${SCALA} -cp ${CWD}/lib_managed/scala_2.8.1/compile/*:${CWD}/target/scala_2.8.1/* com.wordnik.irc.Main $@
