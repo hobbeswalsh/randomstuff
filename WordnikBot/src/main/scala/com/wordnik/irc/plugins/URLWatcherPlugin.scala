@@ -8,6 +8,7 @@ package com.wordnik.irc.plugins
  * To change this template use File | Settings | File Templates.
  */
 
+
 class URLWatcherPlugin extends GenericPlugin {
    val url_re = """http[s]?://[\S]+""".r
 
@@ -22,6 +23,8 @@ class URLWatcherPlugin extends GenericPlugin {
   def act() {
     loop {
       receive {
+      // This is HellaBusted. I'm using a Hermes, which is currently only built to pass Commands.
+      // I'll need to make Hermes more
       case h: com.wordnik.irc.Hermes =>
 	h ! tinify(h.getCommand.name)
       case _  =>
