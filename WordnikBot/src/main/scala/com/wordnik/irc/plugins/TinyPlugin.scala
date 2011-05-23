@@ -8,7 +8,7 @@ class TinyPlugin extends GenericPlugin {
 
   def tinify(url:String): String = {
     var u = url
-    if ( ! u.startsWith("http://") ) {
+    if ( ! (u.startsWith("http://") || u.startsWith("https://")) ) {
       u = "http://" + u
     }
     Source.fromURL(baseurl + u).mkString
