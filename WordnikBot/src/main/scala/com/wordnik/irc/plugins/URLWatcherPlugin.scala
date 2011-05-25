@@ -1,13 +1,8 @@
 package com.wordnik.irc.plugins
 
-/**
- * Created by IntelliJ IDEA.
- * User: rwalsh
- * Date: 5/17/11
- * Time: 4:57 PM
- * To change this template use File | Settings | File Templates.
+/*
+ * -rwalsh (via IntelliJ)
  */
-
 
 class URLWatcherPlugin extends GenericPlugin {
    val url_re = """http[s]?://[\S]+""".r
@@ -16,7 +11,7 @@ class URLWatcherPlugin extends GenericPlugin {
     val found = url_re.findAllIn(text).toList
     if ( found.isEmpty ) { Nil }
     val tinifier = new TinyPlugin
-    val ret = for { url <- found; if url.length() > 30 } yield tinifier.tinify(url)
+    val ret = for { url <- found; if url.length() > 45 } yield tinifier.tinify(url)
     ret
   }
 
