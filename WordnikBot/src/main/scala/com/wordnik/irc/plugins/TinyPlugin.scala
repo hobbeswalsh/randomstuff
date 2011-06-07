@@ -25,4 +25,3 @@ class TinyPlugin extends GenericPlugin {
     }
   }
 }
-

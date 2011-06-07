@@ -21,7 +21,7 @@ class URLWatcherPlugin extends GenericPlugin {
       // This is HellaBusted. I'm using a Hermes, which is currently only built to pass Commands.
       // I'll need to make Hermes more
       case h: com.wordnik.irc.Hermes =>
-	h ! tinify(h.getCommand.name)
+	h ! tinify(h.getMessage.text)
       case _  =>
 	println("got somthing I didn't recognize")
 	sender ! None

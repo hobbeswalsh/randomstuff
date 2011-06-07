@@ -6,14 +6,27 @@ import org.jibble.pircbot._
 import scala.actors.Actor
 
 case class Command(name: String, args: List[String])
-case class Message(channel:String, author:String, text:String)
+case class Message(channel:String, author:String, text:String) {
+  var isCommand = false
+  def getCommand: Command = {
+    if ( this.isCommand == false ) {
+      return new Command("", Nil)
+    }
+
+    val a = this.text.split(" ").toList
+    if ( a(0).contains(':')  ) {
+      new Command(a(0), a.tail)
+    } else {
+      new Command(a(0).substring(1), a.tail)
+    }
+  }
+}
 
 
-class Hermes(irc:ScalaBot, command:Command, channel:String) extends Actor {
+class Hermes(irc:ScalaBot, message:Message, channel:String) extends Actor {
 
-  def this(irc: ScalaBot, message:Message, channel:String) = this(irc, Command(message.text, Nil), channel)
-
-  def getCommand: Command =  { this.command }
+  def getMessage: Message = { this.message }
+  def getCommand: Command =  { this.message.getCommand }
   def send(s:String) {
     if ( s.startsWith("/me ") ) {
       this.irc.sendAction(channel, s.substring(4))
@@ -78,19 +91,19 @@ class ScalaBot(name:String) extends PircBot {
   }
 
   override def onMessage(channel:String, sender:String, login:String, hostname:String, message:String) {
+    val m = new Message(channel, sender, message)
     // called whenever we see a public message in a channel
     if ( this.isCommand(message) ) {
-      val parsedMessage = parseCommand(message)
-      val command = new Command(parsedMessage(0), parsedMessage.tail)
+      m.isCommand = true
 
-      if ( PluginFinder.find(command.name) == None ) { return None }
+      if ( PluginFinder.find(m.getCommand.name) == None ) { return None }
       
       // Every pluign is an actor 
-      val plugin =  PluginFinder.find(command.name).get
+      val plugin =  PluginFinder.find(m.getCommand.name).get
       plugin.start()
 
       // Make a new Hermes to deliver this message
-      val h = new Hermes(this, command, channel)
+      val h = new Hermes(this, m, channel)
       
       // Start the Hermes actor and send him on his way
       h.start()
@@ -121,7 +134,8 @@ object PluginFinder {
     "fortune" -> new FortunePlugin,
     "tiny"    -> new TinyPlugin,
     "said"    -> new LogSearcherPlugin,
-    "better"  -> new BetterPlugin
+    "better"  -> new BetterPlugin,
+    "stfu"    -> new ChatterPlugin
   )
   
 
