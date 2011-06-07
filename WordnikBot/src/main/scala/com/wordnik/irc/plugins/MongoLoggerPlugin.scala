@@ -43,8 +43,8 @@ class ChatterPlugin extends MongoPlugin with GenericPlugin {
     val l = nickMap.toList sortBy {_._2}
     var result = List[String]()
     val winner = l.reverse.head
+    result ::= "%s: STFU already!".format(winner._1)
     for ( person <- l.takeRight(3) ) {
-      result ::= "%s: STFU already!".format(winner._1)
       result ::= "%s:  %d".format(person._1, person._2)
     }
     // the following line needs to do the right thing
