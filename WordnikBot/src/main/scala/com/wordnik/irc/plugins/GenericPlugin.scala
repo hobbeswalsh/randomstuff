@@ -2,7 +2,11 @@ package com.wordnik.irc.plugins
 
 import scala.actors.Actor
 
-trait GenericPlugin extends Actor
+trait GenericPlugin extends Actor {
+  def help(): List[String] = {
+    List("Not implemented yet - bug Robin about it!")
+  }
+}
 
 trait LoggingPlugin extends Actor
 

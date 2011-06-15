@@ -124,6 +124,7 @@ class ScalaBot(name:String) extends PircBot {
 
 }
 
+
 object PluginFinder {
   var m = Map[String, GenericPlugin](
     "beer"    -> new BeerPlugin,
@@ -136,6 +137,7 @@ object PluginFinder {
     "said"    -> new LogSearcherPlugin,
     "better"  -> new BetterPlugin,
     "stfu"    -> new ChatterPlugin
+    //"help"    -> new HelperPlugin
   )
   
 
@@ -144,7 +146,6 @@ object PluginFinder {
   }
 
 }
-
 
 
 object Main {

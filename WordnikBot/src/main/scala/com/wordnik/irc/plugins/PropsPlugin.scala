@@ -15,7 +15,10 @@ class PropsPlugin extends GenericPlugin {
     "/me defers to %s's linguistic prowess.",
     "/me consults %s when he can't find a dictionary.",
     "/me can't wait to grow up and be more like %s.",
-    "/me adds %s to his 'favorite word' list."
+    "/me adds %s to his 'favorite word' list.",
+    "/me likes %s the way Mark likes Rooster sauce.",
+    "if you look up 'righteous' in the dictionary you'll find a picture of %s.",
+    "my affinity for %s exceeds Tony's affinity for mints."
   )
   
   val undirected = List ( "/me pats himself on the back." )

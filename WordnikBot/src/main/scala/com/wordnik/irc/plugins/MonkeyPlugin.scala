@@ -7,7 +7,8 @@ class MonkeyPlugin extends GenericPlugin {
     "EEK EEK!",
     "/me hides raisins about the premises",
     "/me puts on a fez",
-    "/me eats a banana"
+    "/me eats a banana",
+    "/me swings to and fro from his simian tail"
   )
 
   def act {
