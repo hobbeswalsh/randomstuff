@@ -1,6 +1,8 @@
 package com.wordnik.irc.plugins
 
 class MonkeyPlugin extends GenericPlugin {
+  override def help() = { "?monkey will give me a chance to display my more simian side." }
+
   val r = new scala.util.Random
 
   val replies = List(

@@ -136,8 +136,9 @@ object PluginFinder {
     "tiny"    -> new TinyPlugin,
     "said"    -> new LogSearcherPlugin,
     "better"  -> new BetterPlugin,
-    "stfu"    -> new ChatterPlugin
-    //"help"    -> new HelperPlugin
+    "stfu"    -> new ChatterPlugin,
+    "lunch"   -> new YelpPlugin,
+    "help"    -> new HelperPlugin
   )
   
 

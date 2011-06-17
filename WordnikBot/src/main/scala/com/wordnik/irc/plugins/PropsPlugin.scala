@@ -1,6 +1,8 @@
 package com.wordnik.irc.plugins
 
 class PropsPlugin extends GenericPlugin {
+  override def help() = { "?props <target> - Give someone or something a nice pat on the back." }
+
   val r = new scala.util.Random
   val directed = List(
     "/me sings a power-ballad about %s.",

@@ -12,6 +12,9 @@ case class SucksRocksItem (
 )
 
 class BetterPlugin extends GenericPlugin {
+
+  override def help() = { "?better <item1> or <item2> or ... I'll do my research and let you know what's better." }
+
   implicit val formats = DefaultFormats  // For casting JSON to case classes
 
   val baseurl = "http://sucks-rocks.com/query?"

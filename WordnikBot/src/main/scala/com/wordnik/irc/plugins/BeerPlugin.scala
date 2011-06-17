@@ -46,6 +46,9 @@ case class Brewery(
 
 // The actual plugin
 class BeerPlugin extends GenericPlugin {
+
+  override def help() = { "?beer will fetch and display a tasy beer right here in the IRC channel!" }
+
   implicit val formats = DefaultFormats  // For casting JSON to case classes
   val beerUrl    = "http://obdb-dev-hoke.apigee.com/beers/get?id="
   val breweryUrl = "http://obdb-dev-hoke.apigee.com/breweries/get?id="

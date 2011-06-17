@@ -15,6 +15,8 @@ case class Fortune(
 
 class FortunePlugin extends GenericPlugin {
 
+  override def help() = { "?fortune will get you a random fortune from the internet." }
+
   implicit val formats = DefaultFormats  // For casting JSON to case classes
 
   val url = "http://www.iheartquotes.com/api/v1/random?format=json"

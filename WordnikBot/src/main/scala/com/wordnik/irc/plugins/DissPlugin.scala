@@ -2,6 +2,8 @@ package com.wordnik.irc.plugins
 
 class DissPlugin extends GenericPlugin {
 
+  override def help() = { "Aw zing! ?diss <target> to diss someone!" }
+
   val r = new scala.util.Random
 
   val directed = List(
