@@ -118,7 +118,7 @@ class ScalaBot(name:String) extends PircBot {
       h.start
       
       logger ! m
-      urlWatcher ! h
+      // urlWatcher ! h // Zeke said no on this one...
     }
   }
 
@@ -133,8 +133,7 @@ object PluginFinder {
     "diss"    -> new DissPlugin,
     "props"   -> new PropsPlugin,
     "fortune" -> new FortunePlugin,
-    /* "tiny"    -> new TinyPlugin, 
-      Zeke said he doesn't like it D: */
+    "tiny"    -> new TinyPlugin, 
     "said"    -> new LogSearcherPlugin,
     "better"  -> new BetterPlugin,
     "stfu"    -> new ChatterPlugin,
