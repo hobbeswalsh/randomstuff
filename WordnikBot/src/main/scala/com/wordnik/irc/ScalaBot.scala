@@ -133,7 +133,8 @@ object PluginFinder {
     "diss"    -> new DissPlugin,
     "props"   -> new PropsPlugin,
     "fortune" -> new FortunePlugin,
-    "tiny"    -> new TinyPlugin,
+    /* "tiny"    -> new TinyPlugin, 
+      Zeke said he doesn't like it D: */
     "said"    -> new LogSearcherPlugin,
     "better"  -> new BetterPlugin,
     "stfu"    -> new ChatterPlugin,
