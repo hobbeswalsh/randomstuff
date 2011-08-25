@@ -43,12 +43,14 @@ class YelpPlugin extends GenericPlugin {
   override def help() = { "?lunch will help you decide what to get for lunch." }
 
   implicit val formats = DefaultFormats  // For casting JSON to case classes
-
-  val yelpUrl    = "http://api.yelp.com/business_review_search?term=lunch&location=San%20Mateo%20CA&ywsid=9QzogsLERlJBkSBkQoNhaQ&radius_filter=1000"
-
+  
+  val defaultLoc = "San Mateo CA"
+  
   val r = new Random
 
-  def getLunch: List[String] = {
+  def getLunch(loc:String=defaultLoc): List[String] = {
+    val urlEncodedLoc = loc.replace(" ", "%20")
+    val yelpUrl    = "http://api.yelp.com/business_review_search?term=lunch&location=%s&ywsid=9QzogsLERlJBkSBkQoNhaQ&radius_filter=1000".format(urlEncodedLoc)
     val results = parse(Source.fromURL(yelpUrl).mkString).extract[YelpResult]
     val result = r.shuffle(results.businesses).head
     val repl = result.name + ": " + result.address1 + " (" + result.phone + ")"
@@ -59,10 +61,16 @@ class YelpPlugin extends GenericPlugin {
     loop {
       receive {
         case h: com.wordnik.irc.Hermes =>
-          h.getCommand.name match {
-            case "lunch" => h ! getLunch
-            case _       => sender ! None
-          }
+	  if ( h.getCommand.args.isEmpty ) {
+            h.getCommand.name match {
+              case "lunch" => h ! getLunch()
+              case _       => sender ! None
+            }
+	  } else {
+	    val target = h.getCommand.args.mkString(" ")
+	    val reply  = getLunch(target)
+	    h ! reply
+	  }
         case _  =>
           println("got somthing I didn't recognize")
           sender ! None
