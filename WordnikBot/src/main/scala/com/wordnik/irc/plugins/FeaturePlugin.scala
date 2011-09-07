@@ -20,16 +20,10 @@ class FeaturePlugin extends GenericPlugin {
     Transport.send(message)
   }
 
-  def act {
-    loop {
-      receive {
-	case h: com.wordnik.irc.Hermes =>
-	  val feature = h.getCommand.args.mkString(" ")
-	  sendMail(feature)
-	  h ! List("Robin will get right on that.")
-	case _ => sender ! None
-      }
-    }
+  override def process(args:List[String]): List[String] = {
+    val feature = args.mkString(" ")
+    sendMail(feature)
+    List("Mail sent to my creator.")
   }
 
 }

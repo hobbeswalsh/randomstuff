@@ -32,18 +32,8 @@ class BetterPlugin extends GenericPlugin {
     scores
   }
 
-  def act {
-    loop {
-      receive {
-      case h: com.wordnik.irc.Hermes =>
-	h ! findBetter(h.getCommand.args)
-      case _  =>
-	println("got somthing I didn't recognize")
-	sender ! None
-      }
-    }
-  
-
+  override def process(args:List[String]): List[String] =  {
+    findBetter(args)
   }
 
 }

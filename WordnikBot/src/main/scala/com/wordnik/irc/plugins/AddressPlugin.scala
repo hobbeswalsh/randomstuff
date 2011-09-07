@@ -10,15 +10,9 @@ class AddressPlugin extends GenericPlugin {
 
   val noun = List( "apple-john", "baggage", "barnacle", "bladder", "boar-pig", "bugbear", "bum-bailey", "canker-blossom", "clack-dish", "clotpole", "coxcomb", "codpiece", "death-token", "dewberry", "flap-dragon", "flax-wench", "flirt-gill", "foot-licker", "fustilarian", "giglet", "gudgeon", "haggard", "harpy", "hedge-pig", "horn-beast", "hugger-mugger", "joithead", "lewdster", "lout", "maggot-pie", "malt-worm", "mammet", "measle", "minnow", "miscreant", "moldwarp", "mumble-news", "nut-hook", "pigeon-egg", "pignut", "puttock", "pumpion", "ratsbane", "scut", "skainsmate", "strumpet", "varlet", "vassal", "whey-face", "wagtail")
 
-  def act {
-    loop {
-      receive {
-	case h: com.wordnik.irc.Hermes =>
-	  val insult = "...thou " + r.shuffle(adj).head + ", " + r.shuffle(adj2).head + " " + r.shuffle(noun).head + "!"
-	  h ! address ::: List(insult)
-	case _ => sender ! None
-      }
-    }
+  override def process(args:List[String]): List[String] = {
+    val insult = "...thou " + r.shuffle(adj).head + ", " + r.shuffle(adj2).head + " " + r.shuffle(noun).head + "!"
+    List(insult)
   }
-  
+
 }

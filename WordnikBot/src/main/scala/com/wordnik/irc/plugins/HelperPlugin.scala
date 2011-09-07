@@ -27,14 +27,8 @@ class HelperPlugin extends GenericPlugin {
     }
   }
 
-  def act {
-    loop {
-      receive {
-        case h: com.wordnik.irc.Hermes =>
-          h ! getHelp(h.getCommand.args)
-        case _ =>
-          sender ! None
-      }
-    }
+  override def process(args:List[String]): List[String] = {
+    getHelp(args)
   }
+
 }

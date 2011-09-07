@@ -13,15 +13,9 @@ class MonkeyPlugin extends GenericPlugin {
     "/me swings to and fro from his simian tail"
   )
 
-  def act {
-    loop {
-      receive {
-	case h: com.wordnik.irc.Hermes =>
-	  h ! List(r.shuffle(replies).head)
-	case _ =>
-	  None
-      }
-    }
+  override def process(args:List[String]): List[String] = {
+    List(r.shuffle(replies).head)
   }
+
 }
 

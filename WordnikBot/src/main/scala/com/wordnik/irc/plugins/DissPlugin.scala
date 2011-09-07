@@ -33,19 +33,13 @@ class DissPlugin extends GenericPlugin {
 
   val undirected = List( "/me looks around for someone to diss." )
 
-  def act {
-    loop {
-      receive {
-	case h: com.wordnik.irc.Hermes =>
-	  if ( h.getCommand.args.isEmpty ) {
-	    h ! List(r.shuffle(undirected).head)
-	  } else {
-	    val target = h.getCommand.args.mkString(" ")
-	    val reply = format(r.shuffle(directed).head.mkString, target)
-	    h ! List(reply)
-	  }
-	case _ => sender ! None
-      }
+  override def process(args:List[String]): List[String] = {
+    if ( args.isEmpty ) {
+      undirected
+    }
+    else {
+      val target = args.mkString(" ")
+      List(r.shuffle(directed).head.mkString.format(target))
     }
   }
 }

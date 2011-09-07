@@ -73,22 +73,9 @@ class BeerPlugin extends GenericPlugin {
     val saying = r.shuffle(sayings).head
     List( saying + beer.name + " from " + brewery.name )
   }
-  
-  def act {
-    loop {
-      receive {
-      case h: com.wordnik.irc.Hermes =>
-	h.getCommand.name match {
-	  case "beer" => h ! getBeer
-	  case _      => None
-	}
-      case _  =>
-	println("got somthing I didn't recognize")
-	sender ! None
-      }
-    }
-  
 
+  override def process(args: List[String]): List[String] = {
+    getBeer
   }
 
 }

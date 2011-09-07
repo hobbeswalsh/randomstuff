@@ -26,15 +26,8 @@ class FortunePlugin extends GenericPlugin {
     fortune.quote.split("\n").toList
   }
 
-  def act {
-    loop {
-      receive {
-      case h: com.wordnik.irc.Hermes =>
-	h ! getFortune
-      case _  =>
-	println("got somthing I didn't recognize")
-	sender ! None
-      }
-    }
+  override def process(args:List[String]): List[String] = {
+    getFortune
   }
+
 }

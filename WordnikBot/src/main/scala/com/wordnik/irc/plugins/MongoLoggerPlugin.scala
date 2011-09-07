@@ -17,17 +17,9 @@ class LogSearcherPlugin extends MongoPlugin with GenericPlugin {
     conn.find(query).map(author + ": " + _.get("message").toString).toList
   }
 
-  def act {
-    loop {
-      receive {
-      case h: com.wordnik.irc.Hermes =>
-	      h ! findMessages(h.getCommand.args)
-      case _  =>
-	      println("got somthing I didn't recognize")
-	      sender ! None
-      }
-    }
-  } 
+  override def process(args:List[String]): List[String] = {
+    findMessages(args)
+  }
 
 }
 
@@ -50,16 +42,9 @@ class ChatterPlugin extends MongoPlugin with GenericPlugin {
     // the following line needs to do the right thing
     result
   }
-  def act {
-    loop {
-      receive {
-      case h: com.wordnik.irc.Hermes =>
-	      h ! findChatterers(h.getCommand.args)
-      case _  =>
-	      println("got somthing I didn't recognize")
-	      sender ! None
-      }
-    }
+
+  override def process(args:List[String]): List[String] = {
+    findChatterers(args)
   }
 }
 
@@ -73,17 +58,22 @@ class MongoLoggerPlugin extends MongoPlugin with LoggingPlugin {
       "channel"  -> channel,
       "time"     -> now
     )
-    conn += insert
+    try {
+      conn += insert
+    }
+    catch {
+      case e: Exception => println("Couldn't log message")
+    }
   }
 
-  def act {
+  def act() {
     loop {
       receive {
       case m: com.wordnik.irc.Message =>
-	  log(m.channel, m.author, m.text)
+	      log(m.channel, m.author, m.text)
       case _  =>
-	println("got somthing I didn't recognize")
-	sender ! None
+	      println("got somthing I didn't recognize")
+	      sender ! None
       }
     }
   } 

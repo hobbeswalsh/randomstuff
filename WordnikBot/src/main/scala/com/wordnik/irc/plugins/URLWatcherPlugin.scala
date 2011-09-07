@@ -4,6 +4,7 @@ package com.wordnik.irc.plugins
  * -rwalsh (via IntelliJ)
  */
 
+/*
 class URLWatcherPlugin extends GenericPlugin {
    val url_re = """http[s]?://[\S]+""".r
 
@@ -18,9 +19,9 @@ class URLWatcherPlugin extends GenericPlugin {
   def act() {
     loop {
       receive {
-      // This is HellaBusted. I'm using a Hermes, which is currently only built to pass Commands.
-      // I'll need to make Hermes more
-      case h: com.wordnik.irc.Hermes =>
+      // This is HellaBusted. I'm using a Commander, which is currently only built to pass Commands.
+      // I'll need to make Commander more
+      case h: com.wordnik.irc.Commander =>
 	h ! tinify(h.getMessage.text)
       case _  =>
 	println("got somthing I didn't recognize")
@@ -29,3 +30,4 @@ class URLWatcherPlugin extends GenericPlugin {
     }
   }
 }
+*/

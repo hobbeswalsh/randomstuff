@@ -7,6 +7,30 @@ trait GenericPlugin extends Actor {
   def help(): String = {
     "Not implemented yet - bug Robin about it!"
   }
+
+  def process(args: List[String]): List[String] = {
+    println("This plugin hasn't even been written yet! Bug Robin about it!")
+    List()
+  }
+
+  def act() {
+    loop {
+      receive {
+	      case c: com.wordnik.irc.Command =>
+          reply(process(c.args))
+	      case _ =>
+          println("%s couldn't make sense of what it got".format(this))
+	        None
+      }
+    }
+  }
+
+  override def exceptionHandler = {
+    case e: Exception =>
+      println(e.getMessage)
+      sender ! List("Hmmm... something seems to have gone wrong.")
+  }
+
 }
 
 trait LoggingPlugin extends Actor

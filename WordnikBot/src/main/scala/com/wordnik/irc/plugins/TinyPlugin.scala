@@ -14,14 +14,7 @@ class TinyPlugin extends GenericPlugin {
     Source.fromURL(baseurl + u).mkString
   }
 
-  def act {
-    loop {
-      receive {
-	case h: com.wordnik.irc.Hermes =>
-	  val tinies = h.getCommand.args.map(tinify(_)).toList
-	  h ! tinies
-	case _ => sender ! None
-      }
-    }
+  override def process(args:List[String]): List[String] = {
+    args.map(tinify(_)).toList
   }
 }
