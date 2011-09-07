@@ -19,7 +19,8 @@ object PluginFinder {
     "better"  -> new BetterPlugin,
     "stfu"    -> new ChatterPlugin,
     "lunch"   -> new YelpPlugin,
-    "help"    -> new HelperPlugin
+    "help"    -> new HelperPlugin,
+    "twitter" -> new TwitterSearchPlugin
   )
 
 

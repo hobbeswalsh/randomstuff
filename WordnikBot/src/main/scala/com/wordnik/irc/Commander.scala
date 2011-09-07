@@ -21,7 +21,7 @@ class Commander(bot:ScalaBot, chan:String, who:String, command:Command) extends 
 
   def sendReply(l:List[String]) {
     var toWhom = chan
-    if ( l.size > 3 ) {
+    if ( l.size > 4 ) {
       toWhom = who
     }
     l.foreach(bot.emit(toWhom, _))

@@ -51,17 +51,10 @@ class YelpPlugin extends GenericPlugin {
   def getLunch(loc:String=defaultLoc): List[String] = {
     val urlEncodedLoc = loc.replace(" ", "%20")
     val yelpUrl    = "http://api.yelp.com/business_review_search?term=lunch&location=%s&ywsid=9QzogsLERlJBkSBkQoNhaQ&radius_filter=1000".format(urlEncodedLoc)
-    try {
-      val results = parse(Source.fromURL(yelpUrl).mkString).extract[YelpResult]
-      val result = r.shuffle(results.businesses).head
-      val repl = result.name + ": " + result.address1 + " (" + result.phone + ")"
-      List(repl)
-    }
-    catch {
-      case e: Exception => println(e);
-      List()
-    }
-
+    val results = parse(Source.fromURL(yelpUrl).mkString).extract[YelpResult]
+    val result = r.shuffle(results.businesses).head
+    val repl = result.name + ": " + result.address1 + " (" + result.phone + ")"
+    List(repl)
   }
 
   override def process(args:List[String]): List[String] = {
