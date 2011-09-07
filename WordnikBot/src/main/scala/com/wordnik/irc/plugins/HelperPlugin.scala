@@ -1,7 +1,6 @@
 package com.wordnik.irc.plugins
 
 import com.wordnik.irc._
-import com.sun.tools.internal.ws.processor.model.jaxb.RpcLitMember
 
 /*
  * -rwalsh (via IntelliJ) 
