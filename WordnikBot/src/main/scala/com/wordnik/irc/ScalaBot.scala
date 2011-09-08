@@ -6,8 +6,8 @@ import org.jibble.pircbot._
 class ScalaBot(name:String, commandChar: Char) extends PircBot {
   this.setName(name)     // set our IRC name
 
-  //val logger = new MongoLoggerPlugin
-  //logger.start()
+  val logger = new MongoLoggerPlugin
+  logger.start()
 
 /*  val urlWatcher = new URLWatcherPlugin
   urlWatcher.start()*/
@@ -25,6 +25,7 @@ class ScalaBot(name:String, commandChar: Char) extends PircBot {
     }
   }
 
+
   override def onMessage(channel:String, sender:String, login:String, hostname:String, message:String) {
     // called whenever we see a public message in a channel
     if ( this.isCommand(message) ) {
@@ -35,14 +36,23 @@ class ScalaBot(name:String, commandChar: Char) extends PircBot {
 
     } else {
       // do whatever we need to do on a non-command message.
-      // I imagine this will get more intricate over time.
+      // I imagine this will  get more intricate over time.
       val m = Message(channel, sender, message)
-      //val h = new Commander(this, m, channel)
-      //h.start()
-      
-      //logger ! m
+      logger ! m
+    }
+  }
 
-      // urlWatcher ! h // Zeke said no on this one...
+  override def onPrivateMessage(sender:String, login:String, hostname:String, message:String) {
+    if ( this.isCommand(message) ) {
+      val c = parseCommand(message)
+      val commander = new Commander(this, sender, sender, c)
+      commander.start()
+      commander ! c
+
+    } else {
+      // do whatever we need to do on a non-command message.
+      // I imagine this will get more intricate over time.
+      val m = Message(sender, sender, message)
     }
   }
 

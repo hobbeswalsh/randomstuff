@@ -27,6 +27,8 @@ case class TwitterResultMetaData( result_type: String )
 
 class TwitterSearchPlugin extends GenericPlugin {
 
+  override def help() = { "This will search Twitter for your query and return a random one of the results." }
+
   val r = new Random
   val baseUrl = "http://search.twitter.com/search.json?rpp=100&q="
   implicit val formats = DefaultFormats  // For casting JSON to case classes

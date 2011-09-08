@@ -20,7 +20,9 @@ object PluginFinder {
     "stfu"    -> new ChatterPlugin,
     "lunch"   -> new YelpPlugin,
     "help"    -> new HelperPlugin,
-    "twitter" -> new TwitterSearchPlugin
+    "twitter" -> new TwitterSearchPlugin,
+    "nyt"     -> new NYTimesPlugin,
+    "search"  -> new SearchPlugin
   )
 
 
