@@ -27,6 +27,7 @@ trait GenericPlugin extends Actor {
 
   override def exceptionHandler = {
     case e: Exception =>
+      println(e)
       println(e.getMessage)
       sender ! List("Hmmm... something seems to have gone wrong.")
   }

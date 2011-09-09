@@ -26,8 +26,8 @@ import xml.parsing.ConstructingParser
     {
  */
 
-case class NYTResults ( offset: String, results: List[NYTResult] )
-case class NYTResult ( body: String, byline: String, date: String, title: String, url: String )
+case class NYTResults ( offset: String, results: List[NYTResult], tokens:List[String], total:Int )
+case class NYTResult ( body: String, byline: Option[String], date: String, title: String, url: String )
 
 class NYTimesPlugin extends GenericPlugin {
 
@@ -43,7 +43,7 @@ class NYTimesPlugin extends GenericPlugin {
     val nyturl = baseUrl + query
     val result = parse(Source.fromURL(nyturl).mkString).extract[NYTResults]
     val choice =  r.shuffle(result.results).head
-    val repl = "%s (%s) -> %s".format(choice.title, choice.byline, choice.url)
+    val repl = "%s (%s) -> %s".format(choice.title, choice.byline.getOrElse("No author attributed"), new TinyPlugin().tinify(choice.url))
     List(repl)
   }
 
