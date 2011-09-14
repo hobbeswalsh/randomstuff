@@ -22,7 +22,8 @@ object PluginFinder {
     "help"    -> new HelperPlugin,
     "twitter" -> new TwitterSearchPlugin,
     "nyt"     -> new NYTimesPlugin,
-    "search"  -> new SearchPlugin
+    "search"  -> new SearchPlugin,
+    "hoptoad" -> new HoptoadPlugin
   )
 
 
