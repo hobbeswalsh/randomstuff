@@ -12,7 +12,7 @@ class AddressPlugin extends GenericPlugin {
 
   override def process(args:List[String]): List[String] = {
     val insult = "...thou " + r.shuffle(adj).head + ", " + r.shuffle(adj2).head + " " + r.shuffle(noun).head + "!"
-    List(insult)
+    List(address, insult)
   }
 
 }
