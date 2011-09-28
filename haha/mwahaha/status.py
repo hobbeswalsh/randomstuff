@@ -80,5 +80,5 @@ class Status:
         for host in self.hosts:
             t = Thread(target=host.check)
             t.start()
-        p = persistence.MongoPersistence()
-        self.id = p.save(self)
+        #p = persistence.MongoPersistence()
+        #self.id = p.save(self)
