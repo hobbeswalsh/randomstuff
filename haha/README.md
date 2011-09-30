@@ -16,14 +16,14 @@ This service should be responsible for placing a newly registered service
 (or a changed service) in the "inactive" state and then performing a 
 health-check and promoting it to "active" if the health-check succeeds.
 
-Similarly, it should be periodically checking all services it knows about
+Similarly, it should be periodically iterating over all services it knows about
 and checking them. Active services that fail a certain number of health
 checks should be demoted, and inactive services that pass a certain number
 should be promoted.
 
 This service is provided by Mwahaha. Mwahaha exposes a REST interface
 that makes it easy to register, deregister, and change nodes' service
-definitions, as well as fetch a current status in either JSON or XML format.
+definitions, as well as fetch the current status in either JSON or XML format.
 
 For example, let's say you have three Apache instances running on three hosts,
 and Mwahaha running on some uprivileged port on a fourth host:
