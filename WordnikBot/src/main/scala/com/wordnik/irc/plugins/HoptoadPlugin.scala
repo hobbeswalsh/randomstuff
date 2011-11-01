@@ -46,7 +46,7 @@ case class HopToadErrorGroup (
 
 class HoptoadPlugin extends GenericPlugin {
 
-  //override def help() = { "This will search for articles containing your query and return one of the results." }
+  override def help() = { "Usage: hoptoad [n] - get the last n (default 3) errors from Hoptoad" }
 
   val key = "132117e05320a4a75b6dfe371ad931dbbc4294c2" // this is stupid!
   val baseUrl = "https://wordnik.hoptoadapp.com/errors.json?auth_token=%s".format(key)

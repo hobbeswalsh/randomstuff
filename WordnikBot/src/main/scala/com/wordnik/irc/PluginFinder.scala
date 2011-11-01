@@ -23,7 +23,8 @@ object PluginFinder {
     "twitter" -> new TwitterSearchPlugin,
     "nyt"     -> new NYTimesPlugin,
     "search"  -> new SearchPlugin,
-    "hoptoad" -> new HoptoadPlugin
+    "hoptoad" -> new HoptoadPlugin,
+    "quote"   -> new QuotePlugin
   )
 
 
