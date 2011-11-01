@@ -5,7 +5,6 @@ import scala.io.Source
 import scala.util.Random
 import net.liftweb.json._
 import net.liftweb.json.JsonParser._
-import com.wordnik.swagger.runtime.common.APIInvoker
 
 
 
