@@ -12,7 +12,6 @@ class QuotePlugin extends GenericPlugin {
   
   override def help() = { "?quote will get you a stock quote." }
   val baseUrl = "http://download.finance.yahoo.com/d/quotes.csv?s=%s&f=nsl1op&e=.csv"
-
   
   def getQuote(stocks:String): List[String] = {
     val url = baseUrl.format(stocks)

@@ -24,6 +24,8 @@ object PluginFinder {
     "nyt"     -> new NYTimesPlugin,
     "search"  -> new SearchPlugin,
     "hoptoad" -> new HoptoadPlugin,
+    "roll"    -> new RollPlugin,
+    "rps"     -> new RPSPlugin,
     "quote"   -> new QuotePlugin
   )
 

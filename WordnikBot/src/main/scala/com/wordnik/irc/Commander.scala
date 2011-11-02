@@ -11,6 +11,7 @@ class Commander(bot:ScalaBot, chan:String, who:String, command:Command) extends 
     if ( PluginFinder.find(command.name) == None ) { println("no such command name: %s".format(command.name)); return }
     // Every plugin is an actor
     val plugin =  PluginFinder.find(command.name).get
+    plugin.caller = who
     plugin.start()
     val result = (plugin !! command)
     result() match {

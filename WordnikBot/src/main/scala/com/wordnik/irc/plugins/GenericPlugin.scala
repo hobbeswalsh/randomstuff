@@ -4,6 +4,8 @@ import scala.actors.Actor
 
 trait GenericPlugin extends Actor {
 
+  var caller: String = "Nobody"
+
   def help(): String = {
     "Not implemented yet - bug Robin about it!"
   }

@@ -60,8 +60,9 @@ class HoptoadPlugin extends GenericPlugin {
     var l = List[String]()
     for ( error <- results ) {
       val eg = error.group
+      val emsg = eg.error_message
       val url = new TinyPlugin().tinify(webUrl + eg.id.toString)
-      val msg = eg.error_class + " -- " + url
+      val msg = eg.error_class + ":" + emsg + " -- " + url
       l = msg :: l
     }
     l
