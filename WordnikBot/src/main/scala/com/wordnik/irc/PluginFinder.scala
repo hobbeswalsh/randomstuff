@@ -26,6 +26,7 @@ object PluginFinder {
     "hoptoad" -> new HoptoadPlugin,
     "roll"    -> new RollPlugin,
     "rps"     -> new RPSPlugin,
+    "build"   -> new JenkinsPlugin,
     "quote"   -> new QuotePlugin
   )
 
